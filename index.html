@@ -1,0 +1,708 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IQVIA | Glean Enterprise Brief</title>
+<style>
+  :root {
+    --blue: #0A2540;
+    --blue-mid: #1A3A5C;
+    --accent: #0071E3;
+    --accent-light: #E8F4FD;
+    --green: #00C48C;
+    --coral: #FF6B6B;
+    --bg: #F5F5F7;
+    --card: #FFFFFF;
+    --text: #1D1D1F;
+    --text-sec: #6E6E73;
+    --border: rgba(0,0,0,0.06);
+    --radius: 14px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
+    --shadow-hover: 0 2px 8px rgba(0,0,0,0.08), 0 12px 32px rgba(0,0,0,0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .container { max-width:1080px; margin:0 auto; padding:0 32px; }
+
+  /* ---- HERO ---- */
+  .hero { background:linear-gradient(135deg, var(--blue) 0%, #0F3460 50%, #1A5276 100%); color:#fff; padding:72px 32px 56px; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; top:-40%; right:-15%; width:520px; height:520px; background:radial-gradient(circle,rgba(0,113,227,0.12) 0%,transparent 70%); border-radius:50%; }
+  .hero-inner { max-width:1080px; margin:0 auto; position:relative; z-index:1; }
+  .hero-badge { display:inline-block; background:rgba(255,255,255,0.1); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.12); border-radius:100px; padding:6px 16px; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-bottom:20px; }
+  .hero h1 { font-size:34px; font-weight:700; line-height:1.15; margin-bottom:14px; letter-spacing:-0.02em; }
+  .hero h1 span { color:var(--accent); }
+  .hero-sub { font-size:16px; color:rgba(255,255,255,0.6); max-width:680px; line-height:1.65; }
+
+  /* ---- SECTION SHARED ---- */
+  .sec-label { font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:6px; }
+  .sec-title { font-size:26px; font-weight:700; line-height:1.2; margin-bottom:8px; letter-spacing:-0.01em; }
+  .sec-desc { font-size:15px; color:var(--text-sec); max-width:720px; line-height:1.65; margin-bottom:28px; }
+
+  /* ---- WHAT IS GLEAN ---- */
+  .what-section { padding:56px 0 40px; }
+  .what-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+  .what-card { background:white; border-radius:var(--radius); padding:28px 28px; box-shadow:var(--shadow); border:1px solid var(--border); }
+  .what-card h3 { font-size:17px; font-weight:700; color:var(--blue); margin-bottom:6px; display:flex; align-items:center; gap:8px; }
+  .what-card p { font-size:14px; color:var(--text-sec); line-height:1.6; }
+
+  /* ---- HOW IT WORKS ---- */
+  .how-section { padding:48px 0; background:white; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .how-flow { display:flex; align-items:stretch; gap:0; padding:16px 0 0; }
+  .how-step { flex:1; text-align:center; padding:0 18px; }
+  .how-num { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; background:var(--blue); color:#fff; font-size:14px; font-weight:700; margin-bottom:10px; }
+  .how-step h4 { font-size:15px; font-weight:700; color:var(--blue); margin-bottom:6px; }
+  .how-step p { font-size:12px; color:var(--text-sec); line-height:1.5; }
+  .how-chips { display:flex; justify-content:center; gap:4px; flex-wrap:wrap; margin-bottom:8px; }
+  .how-chip { display:inline-block; background:var(--bg); border-radius:5px; padding:2px 8px; font-size:10px; color:var(--blue-mid); font-weight:500; }
+  .how-arrow { display:flex; align-items:center; justify-content:center; width:36px; flex-shrink:0; }
+  .how-arrow svg { width:26px; height:26px; }
+  .trust-strip { display:flex; gap:20px; flex-wrap:wrap; padding:24px 0 0; justify-content:center; }
+  .trust-item { font-size:13px; color:var(--text-sec); display:flex; align-items:center; gap:6px; }
+  .trust-item strong { color:var(--text); font-weight:600; }
+  .trust-dot { width:6px; height:6px; border-radius:50%; background:var(--green); flex-shrink:0; }
+
+  /* ---- PROOF STRIP ---- */
+  .proof-section { padding:40px 0; }
+  .proof-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .proof-card { background:white; border-radius:12px; padding:20px 18px; text-align:center; box-shadow:var(--shadow); border:1px solid var(--border); }
+  .proof-val { font-size:26px; font-weight:700; color:var(--accent); line-height:1.1; }
+  .proof-lbl { font-size:11px; color:var(--text-sec); margin-top:4px; text-transform:uppercase; letter-spacing:0.04em; }
+  .proof-src { font-size:10px; color:var(--text-sec); opacity:0.6; margin-top:6px; }
+
+  /* ---- DEPARTMENT GRID ---- */
+  .dept-section { padding:32px 0 64px; }
+  .dept-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:0; }
+  .dept-tile { background:white; border-radius:12px; padding:20px 14px; text-align:center; cursor:pointer; transition:all 0.25s ease; border:2px solid transparent; box-shadow:var(--shadow); position:relative; }
+  .dept-tile:hover { transform:translateY(-3px); box-shadow:var(--shadow-hover); }
+  .dept-tile.active { border-color:var(--accent); background:var(--accent-light); }
+  .dept-icon { font-size:28px; margin-bottom:8px; display:block; transition:transform 0.2s ease; }
+  .dept-tile.active .dept-icon { transform:scale(1.1); }
+  .dept-name { font-size:12px; font-weight:600; color:var(--blue); line-height:1.3; }
+  .dept-tile.active .dept-name { color:var(--accent); }
+
+  /* ---- DETAIL PANEL ---- */
+  .detail-panel { margin-top:20px; display:none; animation:fadeSlide 0.35s ease forwards; }
+  .detail-panel.visible { display:block; }
+  @keyframes fadeSlide { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+  .detail-card { background:white; border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid var(--border); overflow:hidden; }
+  .detail-header { padding:24px 28px 20px; border-bottom:1px solid var(--border); }
+  .detail-header h3 { font-size:20px; font-weight:700; margin-bottom:4px; display:flex; align-items:center; gap:10px; }
+  .detail-header p { font-size:14px; color:var(--text-sec); line-height:1.55; max-width:780px; }
+  .detail-body { display:grid; grid-template-columns:1fr 1fr; gap:0; }
+  .detail-col { padding:24px 28px; }
+  .detail-col:first-child { border-right:1px solid var(--border); }
+  .detail-col-label { font-size:10px; text-transform:uppercase; letter-spacing:0.08em; font-weight:600; margin-bottom:12px; display:flex; align-items:center; gap:6px; }
+  .col-glean { color:var(--accent); }
+  .col-impact { color:var(--green); }
+  .detail-col ul { list-style:none; padding:0; }
+  .detail-col li { font-size:13px; color:var(--text-sec); line-height:1.55; padding:6px 0; padding-left:14px; position:relative; }
+  .detail-col li::before { content:''; position:absolute; left:0; top:13px; width:5px; height:5px; border-radius:50%; }
+  .col-glean li::before { background:var(--accent); }
+  .col-impact li::before { background:var(--green); }
+  .detail-footer { padding:14px 28px; background:var(--bg); border-top:1px solid var(--border); display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .strat-tag { display:inline-block; background:linear-gradient(135deg,var(--blue),var(--blue-mid)); color:white; border-radius:6px; padding:3px 10px; font-size:10px; font-weight:600; letter-spacing:0.04em; }
+  .strat-lbl { font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-sec); font-weight:600; }
+
+  /* ---- FOOTER ---- */
+  .footer { background:var(--blue); color:white; padding:48px 32px; }
+  .footer-inner { max-width:1080px; margin:0 auto; }
+  .footer-cta { font-size:20px; font-weight:700; margin-bottom:8px; }
+  .footer p { font-size:13px; color:rgba(255,255,255,0.55); line-height:1.65; margin-bottom:10px; }
+  .footer-fine { font-size:11px; color:rgba(255,255,255,0.3); margin-top:24px; text-align:center; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width:900px) {
+    .dept-grid { grid-template-columns:repeat(3,1fr); }
+    .detail-body { grid-template-columns:1fr; }
+    .detail-col:first-child { border-right:none; border-bottom:1px solid var(--border); }
+    .what-grid { grid-template-columns:1fr; }
+    .proof-grid { grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:600px) {
+    .dept-grid { grid-template-columns:repeat(2,1fr); }
+    .hero h1 { font-size:26px; }
+    .how-flow { flex-direction:column; align-items:center; gap:8px; }
+    .how-arrow { transform:rotate(90deg); width:auto; height:28px; }
+  }
+  @media print {
+    body { print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+    @page { margin:0.75in; size:letter; }
+    [class*="fade"],[class*="animate"],[class*="slide"] { opacity:1 !important; transform:none !important; }
+    *,*::before,*::after { animation:none !important; transition:none !important; }
+    .dept-tile { break-inside:avoid; }
+    .detail-panel { display:block !important; opacity:1 !important; transform:none !important; }
+    .detail-card { break-inside:avoid; page-break-inside:avoid; }
+    section { break-inside:avoid; }
+    h1,h2,h3,h4,h5,h6 { break-after:avoid; page-break-after:avoid; }
+    p { orphans:3; widows:3; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Prepared for IQVIA | April 2026</div>
+    <h1>Enterprise AI That Understands <span>Your Business</span></h1>
+    <p class="hero-sub">Your teams generate and consume massive amounts of institutional knowledge every day. Glean makes sure the right people can find, use, and act on it instantly, with full security and governance built in.</p>
+  </div>
+</div>
+
+<!-- ========== WHAT IS GLEAN ========== -->
+<section class="what-section">
+  <div class="container">
+    <div class="sec-label">Meet Glean</div>
+    <div class="sec-title">One Platform for Finding, Understanding, and Acting on Knowledge</div>
+    <div class="sec-desc">Glean connects to the systems your teams already use, builds a knowledge graph of how everything relates, and puts that intelligence to work through search, an AI assistant, and agents that automate complex tasks. Think of it as the connective tissue between your people, data, and applications.</div>
+    <div class="what-grid">
+      <div class="what-card">
+        <h3>🔍 Enterprise Search</h3>
+        <p>One search across every system. Glean finds the most relevant, up-to-date answer from wherever it lives, whether that's SharePoint, Salesforce, email, or a proprietary tool, and only shows you what you have permission to see.</p>
+      </div>
+      <div class="what-card">
+        <h3>🤖 AI Assistant</h3>
+        <p>Ask complex questions in natural language. Glean synthesizes answers from across your enterprise data, cites its sources, and learns what's relevant to your role, projects, and priorities.</p>
+      </div>
+      <div class="what-card">
+        <h3>⚡ Agents</h3>
+        <p>Purpose-built AI workflows that automate multi-step tasks. Your teams can build their own agents (no code required) or your engineering team can build sophisticated workflows through our API and SDK.</p>
+      </div>
+      <div class="what-card">
+        <h3>🔒 Governance & Security</h3>
+        <p>Single-tenant deployment. Real-time permission enforcement. Full audit trail. Zero data retention for model training. Glean never sees more than the user is authorized to access.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HOW IT WORKS ========== -->
+<section class="how-section">
+  <div class="container">
+    <div class="sec-label">Under the Hood</div>
+    <div class="sec-title">How It Works</div>
+    <div class="sec-desc">Systems of record stay in place. Glean reads, connects, and activates the knowledge already inside them.</div>
+    <div class="how-flow">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <h4>Connect</h4>
+        <div class="how-chips">
+          <span class="how-chip">M365</span>
+          <span class="how-chip">Salesforce</span>
+          <span class="how-chip">SharePoint</span>
+          <span class="how-chip">Box</span>
+          <span class="how-chip">100+</span>
+        </div>
+        <p>Read-only connectors index content, permissions, and activity signals from your existing applications.</p>
+      </div>
+      <div class="how-arrow"><svg viewBox="0 0 28 28" fill="none"><path d="M6 14h14M16 9l5 5-5 5" stroke="#0071E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <h4>Understand</h4>
+        <div class="how-chips">
+          <span class="how-chip">People</span>
+          <span class="how-chip">Projects</span>
+          <span class="how-chip">Content</span>
+          <span class="how-chip">Permissions</span>
+        </div>
+        <p>A knowledge graph maps how content, people, and processes relate. 180+ signals. Permissions mirrored in real time.</p>
+      </div>
+      <div class="how-arrow"><svg viewBox="0 0 28 28" fill="none"><path d="M6 14h14M16 9l5 5-5 5" stroke="#0071E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <h4>Activate</h4>
+        <div class="how-chips">
+          <span class="how-chip">Search</span>
+          <span class="how-chip">Assistant</span>
+          <span class="how-chip">Agents</span>
+          <span class="how-chip">API</span>
+        </div>
+        <p>Every person and application gets cited, governed answers. Your teams build custom agents on your terms.</p>
+      </div>
+    </div>
+    <div class="trust-strip">
+      <div class="trust-item"><span class="trust-dot"></span><strong>You own all IP</strong></div>
+      <div class="trust-item"><span class="trust-dot"></span><strong>Read-only</strong> systems stay in place</div>
+      <div class="trust-item"><span class="trust-dot"></span><strong>Zero retention</strong> no model training on your data</div>
+      <div class="trust-item"><span class="trust-dot"></span><strong>GxP-ready</strong> full audit trail</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PROOF ========== -->
+<section class="proof-section">
+  <div class="container">
+    <div class="sec-label">What We're Seeing at Scale</div>
+    <div class="sec-title">Results from Organizations Like Yours</div>
+    <div class="sec-desc">These numbers come from enterprise deployments across life sciences, healthcare, and Fortune 500 companies.</div>
+    <div class="proof-grid">
+      <div class="proof-card">
+        <div class="proof-val">86K</div>
+        <div class="proof-lbl">Users deployed at a Top-10 Pharma</div>
+        <div class="proof-src">In under 9 months</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-val">2 vs 50</div>
+        <div class="proof-lbl">Engineers needed vs. point solutions</div>
+        <div class="proof-src">For equivalent AI capabilities</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-val">50%</div>
+        <div class="proof-lbl">Productivity improvement</div>
+        <div class="proof-src">Peer benchmark, enterprise-wide</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-val">40%+</div>
+        <div class="proof-lbl">Reduction in onboarding time</div>
+        <div class="proof-src">Cross-industry average</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DEPARTMENTS ========== -->
+<section class="dept-section">
+  <div class="container">
+    <div class="sec-label">Click Any Department</div>
+    <div class="sec-title">Where Glean Delivers Value</div>
+    <div class="sec-desc">Each tile maps to a function inside your organization. Click to see how Glean supports it and the strategic objective it maps to.</div>
+
+    <div class="dept-grid">
+      <div class="dept-tile" data-dept="rds" onclick="showDept('rds')">
+        <span class="dept-icon">🧪</span>
+        <span class="dept-name">R&DS / Clinical Operations</span>
+      </div>
+      <div class="dept-tile" data-dept="rwe" onclick="showDept('rwe')">
+        <span class="dept-icon">🌐</span>
+        <span class="dept-name">Real World Evidence</span>
+      </div>
+      <div class="dept-tile" data-dept="commercial" onclick="showDept('commercial')">
+        <span class="dept-icon">📈</span>
+        <span class="dept-name">Commercial / Sales</span>
+      </div>
+      <div class="dept-tile" data-dept="advisory" onclick="showDept('advisory')">
+        <span class="dept-icon">💡</span>
+        <span class="dept-name">Advisory & Consulting</span>
+      </div>
+      <div class="dept-tile" data-dept="regulatory" onclick="showDept('regulatory')">
+        <span class="dept-icon">📋</span>
+        <span class="dept-name">Regulatory Affairs</span>
+      </div>
+      <div class="dept-tile" data-dept="datasci" onclick="showDept('datasci')">
+        <span class="dept-icon">📊</span>
+        <span class="dept-name">Data Science & Analytics</span>
+      </div>
+      <div class="dept-tile" data-dept="medaffairs" onclick="showDept('medaffairs')">
+        <span class="dept-icon">⚕️</span>
+        <span class="dept-name">Medical Affairs</span>
+      </div>
+      <div class="dept-tile" data-dept="it" onclick="showDept('it')">
+        <span class="dept-icon">💻</span>
+        <span class="dept-name">IT / Engineering</span>
+      </div>
+      <div class="dept-tile" data-dept="hr" onclick="showDept('hr')">
+        <span class="dept-icon">👥</span>
+        <span class="dept-name">HR / People Ops</span>
+      </div>
+      <div class="dept-tile" data-dept="finance" onclick="showDept('finance')">
+        <span class="dept-icon">💰</span>
+        <span class="dept-name">Finance / FP&A</span>
+      </div>
+      <div class="dept-tile" data-dept="transform" onclick="showDept('transform')">
+        <span class="dept-icon">🚀</span>
+        <span class="dept-name">Enterprise Transformation</span>
+      </div>
+      <div class="dept-tile" style="background:var(--bg);border:2px dashed rgba(0,0,0,0.08);cursor:default;box-shadow:none;">
+        <span class="dept-icon" style="opacity:0.4;">➕</span>
+        <span class="dept-name" style="color:var(--text-sec);">Your Next Use Case</span>
+      </div>
+    </div>
+
+    <!-- R&DS -->
+    <div class="detail-panel" id="panel-rds">
+      <div class="detail-card">
+        <div class="detail-header">
+          <h3>🧪 R&DS / Clinical Operations</h3>
+          <p>Clinical teams manage thousands of protocols, proposals, and regulatory documents each year. Glean can accelerate how those assets are found, assembled, and put to work across the trial lifecycle.</p>
+        </div>
+        <div class="detail-body">
+          <div class="detail-col">
+            <div class="detail-col-label col-glean">● How Glean Supports This</div>
+            <ul>
+              <li>Structured document extraction (protocols to JSON/Markdown) with element-level attribution and citations</li>
+              <li>Proposal assembly agents that draft from prior wins, templates, and CRM data in minutes</li>
+              <li>Cross-system search across SharePoint, Box, M365, and proprietary clinical tools</li>
+              <li>GxP-supporting audit trail for every AI-generated output</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <div class="detail-col-label col-impact">▲ Potential Outcomes</div>
+            <ul>
+              <li>Document processing SLAs measured in minutes, not days</li>
+              <li>Proposal cycles shortened with fewer resources required per submission</li>
+              <li>Consistent, data-grounded proposals that improve win rates</li>
+              <li>Faster backlog-to-revenue conversion across the portfolio</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-footer"><span class="strat-lbl">Maps To →</span><span class="strat-tag">Margin Expansion</span><span class="strat-tag">Backlog Conversion</span></div>
+      </div>
+    </div>
+
+    <!-- RWE -->
+    <div class="detail-panel" id="panel-rwe">
+      <div class="detail-card">
+        <div class="detail-header">
+          <h3>🌐 Real World Evidence</h3>
+          <p>RWE teams generate evidence that informs regulatory, payer, and clinical decisions from diverse data sources. Glean helps unify access to internal studies and reduce duplicated work across regions and therapeutic areas.</p>
+        </div>
+        <div class="detail-body">
+          <div class="detail-col">
+            <div class="detail-col-label col-glean">● How Glean Supports This</div>
+            <ul>
+              <li>Unified search across internal study libraries, publications, and data catalogs</li>
+              <li>Evidence synthesis agents that pull precedents by TA, geography, and study type</li>
+              <li>Surfaces existing research before new studies begin, reducing duplication</li>
+              <li>Permission-aware access ensures the right teams see the right data</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <div class="detail-col-label col-impact">▲ Potential Outcomes</div>
+            <ul>
+              <li>Significant reduction in manual chart review and literature search time</li>
+              <li>Faster evidence-to-submission cycles for regulatory and payer dossiers</li>
+              <li>Fewer duplicated studies across regions and therapeutic areas</li>
+              <li>Stronger cross-functional coordination between regulatory, medical, and commercial</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-footer"><span class="strat-lbl">Maps To →</span><span class="strat-tag">Connected Intelligence</span><span class="strat-tag">Revenue Growth</span></div>
+      </div>
+    </div>
+
+    <!-- COMMERCIAL -->
+    <div class="detail-panel" id="panel-commercial">
+      <div class="detail-card">
+        <div class="detail-header">
+          <h3>📈 Commercial / Sales</h3>
+          <p>Whether it's internal field teams or contract sales organizations deployed on behalf of clients, the quality of every HCP interaction depends on having the right context at the right moment. Glean brings it all together in a single view.</p>
+        </div>
+        <div class="detail-body">
+          <div class="detail-col">
+            <div class="detail-col-label col-glean">● How Glean Supports This</div>
+            <ul>
+              <li>Single-pane view of HCP history, competitive positioning, and approved materials</li>
+              <li>Governed content retrieval with full audit trail for compliance</li>
+              <li>Role-based onboarding that surfaces relevant knowledge from day one</li>
+              <li>Continuity layer that preserves institutional knowledge through CRM migrations and team transitions</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <div class="detail-col-label col-impact">▲ Potential Outcomes</div>
+            <ul>
+              <li>40%+ reduction in onboarding ramp time for new reps</li>
+              <li>Higher call quality and HCP engagement effectiveness</li>
+              <li>Reduced compliance exposure from ungoverned AI tools</li>
+              <li>Consistent commercial execution across geographies and therapeutic areas</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-footer"><span class="strat-lbl">Maps To →</span><span class="strat-tag">Revenue Per Rep</span><span class="strat-tag">Compliance</span></div>
+      </div>
+    </div>
+
+    <!-- ADVISORY -->
+    <div class="detail-panel" id="panel-advisory">
+      <div class="detail-card">
+        <div class="detail-header">
+          <h3>💡 Advisory & Consulting</h3>
+          <p>Advisory teams assemble strategic recommendations from proprietary data, prior engagements, and deep domain expertise. Glean ensures consultants work from the firm's full institutional memory, not just their own.</p>
+        </div>
+        <div class="detail-body">
+          <div class="detail-col">
+            <div class="detail-col-label col-glean">● How Glean Supports This</div>
+            <ul>
+              <li>AI agents that surface prior deliverables matched by TA, geography, and engagement type</li>
+              <li>Drafts structured first passes grounded in institutional evidence and past work</li>
+              <li>Cross-TA knowledge sharing at scale, breaking down information silos</li>
+              <li>Reduces dependency on tenured individuals for critical engagements</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <div class="detail-col-label col-impact">▲ Potential Outcomes</div>
+            <ul>
+              <li>40-60% faster first drafts (peer benchmark)</li>
+              <li>Cross-TA knowledge reuse that raises the quality ceiling on every engagement</li>
+              <li>Reduced key-person dependency risk</li>
+              <li>Higher utilization rates and delivery velocity</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-footer"><span class="strat-lbl">Maps To →</span><span class="strat-tag">Delivery Velocity</span><span class="strat-tag">EBITDA Expansion</span></div>
+      </div>
+    </div>
+
+    <!-- REGULATORY -->
+    <div class="detail-panel" id="panel-regulatory">
+      <div class="detail-card">
+        <div class="detail-header">
+          <h3>📋 Regulatory Affairs</h3>
+          <p>Regulatory teams navigate complex, evolving requirements across global markets. Glean helps surface the right guideline instantly, with cited sources, and keeps AI outputs governed and auditable.</p>
+        </div>
+        <div class="detail-body">
+          <div class="detail-col">
+            <div class="detail-col-label col-glean">● How Glean Supports This</div>
+            <ul>
+              <li>Instant retrieval of correct guidelines or requirements with citations to source policy</li>
+              <li>Audit preparation agents that surface prior findings and remediation history</li>
+              <li>Every AI answer grounded in approved content with full audit trail</li>
+              <li>Permission-aware: only authorized users access restricted regulatory content</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <div class="detail-col-label col-impact">▲ Potential Outcomes</div>
+            <ul>
+              <li>Audit prep time reduced from days to hours</li>
+              <li>Reduced compliance exposure through accurate, sourced responses</li>
+              <li>Faster response to regulatory changes across markets</li>
+              <li>Consistent regulatory guidance regardless of who's asking</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-footer"><span class="strat-lbl">Maps To →</span><span class="strat-tag">Healthcare-grade AI</span><span class="strat-tag">Risk Reduction</span></div>
+      </div>
+    </div>
+
+    <!-- DATA SCI -->
+    <div class="detail-panel" id="panel-datasci">
+      <div class="detail-card">
+        <div class="detail-header">
+          <h3>📊 Data Science & Analytics</h3>
+          <p>When multiple teams build retrieval, governance, and connectors independently, the cost compounds. Glean provides a horizontal foundation: one knowledge graph that powers every AI application across the enterprise.</p>
+        </div>
+        <div class="detail-body">
+          <div class="detail-col">
+            <div class="detail-col-label col-glean">● How Glean Supports This</div>
+            <ul>
+              <li>One knowledge graph and connector layer shared across all AI applications</li>
+              <li>API/SDK-first: embeds into your own agents and AI products</li>
+              <li>100+ pre-built connectors eliminate custom integration per application</li>
+              <li>MCP server support so your agents in other platforms can call Glean for context</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <div class="detail-col-label col-impact">▲ Potential Outcomes</div>
+            <ul>
+              <li>2 engineers vs. 50 for equivalent point-solution builds (peer benchmark)</li>
+              <li>Unified governance for all AI applications from one platform</li>
+              <li>Faster time-to-production for new agent use cases</li>
+              <li>Reduced infrastructure overhead and maintenance burden</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-footer"><span class="strat-lbl">Maps To →</span><span class="strat-tag">AI Platforming</span><span class="strat-tag">Connected Intelligence</span></div>
+      </div>
+    </div>
+
+    <!-- MED AFFAIRS -->
+    <div class="detail-panel" id="panel-medaffairs">
+      <div class="detail-card">
+        <div class="detail-header">
+          <h3>⚕️ Medical Affairs</h3>
+          <p>MSLs and medical teams need instant access to clinical evidence, approved talking points, and regulatory guidance before every KOL engagement. Glean makes that prep effortless and governed.</p>
+        </div>
+        <div class="detail-body">
+          <div class="detail-col">
+            <div class="detail-col-label col-glean">● How Glean Supports This</div>
+            <ul>
+              <li>Single search across publications, study data, and approved content libraries</li>
+              <li>KOL engagement prep agents that surface relevant evidence and interaction history</li>
+              <li>Medical information agents providing cited, governed answers</li>
+              <li>Cross-TA knowledge sharing between therapeutic centers of excellence</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <div class="detail-col-label col-impact">▲ Potential Outcomes</div>
+            <ul>
+              <li>Faster KOL engagement prep with complete, cited context</li>
+              <li>Improved share of scientific voice through better evidence dissemination</li>
+              <li>Measurable time savings for ROI reporting</li>
+              <li>Consistent medical messaging across geographies and TAs</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-footer"><span class="strat-lbl">Maps To →</span><span class="strat-tag">Evidence Leadership</span><span class="strat-tag">Client Retention</span></div>
+      </div>
+    </div>
+
+    <!-- IT -->
+    <div class="detail-panel" id="panel-it">
+      <div class="detail-card">
+        <div class="detail-header">
+          <h3>💻 IT / Engineering</h3>
+          <p>For teams building and governing AI across the enterprise, Glean provides the horizontal layer that eliminates redundant connector, retrieval, and permissions builds across departments.</p>
+        </div>
+        <div class="detail-body">
+          <div class="detail-col">
+            <div class="detail-col-label col-glean">● How Glean Supports This</div>
+            <ul>
+              <li>Pre-built connectors for M365, SharePoint, Salesforce, Box, Confluence, and 100+ more</li>
+              <li>Single-tenant, zero-retention SaaS or cloud-prem in your AWS environment</li>
+              <li>Unified permissions model that mirrors your existing access controls in real time</li>
+              <li>API/SDK so your engineers embed context into products you build and own</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <div class="detail-col-label col-impact">▲ Potential Outcomes</div>
+            <ul>
+              <li>Eliminate redundant connector and governance builds per department</li>
+              <li>Faster time-to-production for new AI applications</li>
+              <li>Centralized logging and audit trail for AI governance</li>
+              <li>You own all IP, agents, and workflows built on the platform</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-footer"><span class="strat-lbl">Maps To →</span><span class="strat-tag">AI Governance</span><span class="strat-tag">Build Efficiency</span></div>
+      </div>
+    </div>
+
+    <!-- HR -->
+    <div class="detail-panel" id="panel-hr">
+      <div class="detail-card">
+        <div class="detail-header">
+          <h3>👥 HR / People Ops</h3>
+          <p>Global workforces mean complex HR operations across jurisdictions. Glean gives employees self-service access to the right policy, the right answer, in their context, without waiting on a ticket.</p>
+        </div>
+        <div class="detail-body">
+          <div class="detail-col">
+            <div class="detail-col-label col-glean">● How Glean Supports This</div>
+            <ul>
+              <li>Self-service HR assistant: answers policy, benefits, and process questions instantly</li>
+              <li>Auto-creates ServiceNow tickets when queries need human escalation</li>
+              <li>Onboarding agents that surface role-relevant content from day one</li>
+              <li>Permission-aware: region-specific policies shown only to the right employees</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <div class="detail-col-label col-impact">▲ Potential Outcomes</div>
+            <ul>
+              <li>40%+ reduction in HR ticket volume</li>
+              <li>Faster time-to-productivity for new hires across geographies</li>
+              <li>Reduced burden on HR business partners</li>
+              <li>Consistent policy delivery across jurisdictions</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-footer"><span class="strat-lbl">Maps To →</span><span class="strat-tag">Operational Efficiency</span><span class="strat-tag">Employee Experience</span></div>
+      </div>
+    </div>
+
+    <!-- FINANCE -->
+    <div class="detail-panel" id="panel-finance">
+      <div class="detail-card">
+        <div class="detail-header">
+          <h3>💰 Finance / FP&A</h3>
+          <p>Finance teams need fast access to operational and financial data to support strategic decisions. Glean connects the dots between operational metrics and financial context across systems.</p>
+        </div>
+        <div class="detail-body">
+          <div class="detail-col">
+            <div class="detail-col-label col-glean">● How Glean Supports This</div>
+            <ul>
+              <li>Instant search across financial documents, policies, and historical reports</li>
+              <li>Connects operational data (trial metrics, headcount, utilization) to financial context</li>
+              <li>Preserves institutional knowledge through leadership transitions</li>
+              <li>Governed access: sensitive financial data stays permission-controlled</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <div class="detail-col-label col-impact">▲ Potential Outcomes</div>
+            <ul>
+              <li>Faster reporting and board prep cycles</li>
+              <li>Better visibility into margin drivers across business segments</li>
+              <li>Reduced manual data aggregation and reconciliation</li>
+              <li>Smooth knowledge continuity through leadership changes</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-footer"><span class="strat-lbl">Maps To →</span><span class="strat-tag">Margin Expansion</span><span class="strat-tag">Leadership Continuity</span></div>
+      </div>
+    </div>
+
+    <!-- TRANSFORMATION -->
+    <div class="detail-panel" id="panel-transform">
+      <div class="detail-card">
+        <div class="detail-header">
+          <h3>🚀 Enterprise Transformation</h3>
+          <p>When every department runs separate AI experiments with separate tools, the value doesn't compound. Glean is a single platform investment that every function builds on, creating compounding economics with each new use case.</p>
+        </div>
+        <div class="detail-body">
+          <div class="detail-col">
+            <div class="detail-col-label col-glean">● How Glean Supports This</div>
+            <ul>
+              <li>One platform investment that serves every department on the same foundation</li>
+              <li>Enterprise analytics: measure adoption, usage, and impact across all functions</li>
+              <li>No-code agent builder empowers business users to create their own workflows</li>
+              <li>Incremental deployment: each new department adds value without adding platforms</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <div class="detail-col-label col-impact">▲ Potential Outcomes</div>
+            <ul>
+              <li>Compounding economics: every new use case builds on the same connectors and graph</li>
+              <li>86K users deployed at a peer top-10 pharma in under 9 months</li>
+              <li>Unified AI adoption metrics for leadership visibility and ROI reporting</li>
+              <li>One vendor relationship, one governance framework, one security model</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-footer"><span class="strat-lbl">Maps To →</span><span class="strat-tag">AI Transformation</span><span class="strat-tag">Operating Leverage</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<div class="footer">
+  <div class="footer-inner">
+    <p class="footer-cta">What's Next?</p>
+    <p>If any of these areas resonate, we'd suggest a focused working session with one or two of your teams to pressure-test these hypotheses against real workflows. The goal isn't to boil the ocean. It's to find the use cases where the value is clearest and build from there.</p>
+    <p class="footer-fine">Confidential | &copy; 2026 Glean Technologies, Inc.</p>
+  </div>
+</div>
+
+<script>
+  function showDept(id) {
+    document.querySelectorAll('.detail-panel').forEach(p => { p.classList.remove('visible'); p.style.display = 'none'; });
+    document.querySelectorAll('.dept-tile').forEach(t => t.classList.remove('active'));
+    const tile = document.querySelector(`[data-dept="${id}"]`);
+    const panel = document.getElementById(`panel-${id}`);
+    if (tile && panel) {
+      tile.classList.add('active');
+      panel.style.display = 'block';
+      panel.classList.remove('visible');
+      void panel.offsetWidth;
+      panel.classList.add('visible');
+      setTimeout(() => panel.scrollIntoView({ behavior:'smooth', block:'nearest' }), 50);
+    }
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });
+  }, { threshold:0.1 });
+  document.querySelectorAll('.what-card, .proof-card, .dept-tile, .how-step').forEach(el => {
+    el.style.opacity='0'; el.style.transform='translateY(12px)'; el.style.transition='opacity 0.4s ease, transform 0.4s ease';
+    observer.observe(el);
+  });
+  window.GleanBridge && window.GleanBridge.postMessage({ actionId:'export-pdf', type:'glean-add-menu', metadata:{ label:'Export as PDF', icon:'export' } });
+  window.GleanBridge && window.GleanBridge.onMessage('action', function(data) {
+    if (data.actionId === 'export-pdf') {
+      document.querySelectorAll('.detail-panel').forEach(p => { p.style.display='block'; p.classList.add('visible'); });
+      setTimeout(() => window.print(), 100);
+    }
+  });
+</script>
+</body>
+</html>
